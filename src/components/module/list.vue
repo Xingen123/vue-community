@@ -4,15 +4,16 @@
         
           <div class="tabContent" id="tabContent">
                 <div v-for="(item,index) in createdList" :key="index" class="listbox" @click="detail(item.communityId)">
-                    <img :src="item.weedfis"  alt="">
+                    <img :src="item.weedfis"  v-if="item.weedfis" alt="">
+                    <video :src="item.videoId"  v-if="item.videoId"></video>
                     <div class="boxbottom">
-                      <div class="one">
+                     <!--  <div class="one">
                           <img :src="item.weedfis" alt="">
                           <span>{{item.name}}</span>
-                      </div>
+                      </div> -->
                       <div class="two">
                           <img src="../../../static/img/dianzan.png" alt="">
-                          <span>{{item.collectionAmount}}</span>
+                          <span>{{item.favorAmount }}</span>
                           <img src="../../../static/img/pinglun.png" alt="">
                           <span>{{item.commentAmount}}</span>
                       </div>
@@ -40,7 +41,7 @@ export default {
     data(){
       return{
         pageNo:1,
-        pageSize:2,
+        pageSize:4,
         createdList:[],
         topStatus:"",
         allLoaded:false,
@@ -60,18 +61,13 @@ export default {
     },
     methods:{
       detail(data){
-        // Indicator.open();
         this.$router.push({
           path: '/details',
-          // params:{
-          //   id:data
-          // }
         })
         sessionStorage.setItem('meta',data)
       },
       //上拉加载提示
       handleTopChange(status) {
-          console.log(status)
           if (status=="drop") {
             this.nextText="释放刷新"
           }else{
@@ -104,9 +100,7 @@ export default {
 
           p1.then(function(response){  // 处理第一个异步任务的结果(每次调用then都会返回一个新创建的Promise对象)
             let aJOSN =JSON.parse(response.currentTarget.response);
-              console.log(aJOSN);
               _this.list = aJOSN
-              
               _this.$emit("child",_this.list)
               //最新
 
@@ -171,7 +165,7 @@ export default {
 }
 .listbox{
    width: 330px;
-   height: 555px;
+   height: 520px;
    border:1px solid rgb(234,234,234);/*no*/
    border-radius: 10px;
    float: left;
@@ -180,18 +174,20 @@ export default {
 .listbox:nth-child(2n){
   margin-left: 30px;
 }
-.listbox>img{
+.listbox>img,.listbox>video{
   width: 100%;
   height: 440px;
   display: block;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+ object-fit: fill;
 }
 .boxbottom{
   width: 100%;
   height: 105px;
 
 }
+
 .one{
   height: 55px;
   display: flex;
@@ -207,7 +203,7 @@ export default {
   margin-left: 20px;
 }
 .two{
-    height: 50px;
+    height: 70px;
    display: flex;
   align-items: center;
 }

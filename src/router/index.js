@@ -9,9 +9,9 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: show,
+      component: index,
        meta: {
-        title:"标签页面"
+        title:"微博主页面"
       }
     },
     {
@@ -35,7 +35,6 @@ export default new Router({
       meta: {
         title:"微博详情"
       }
-    },
-
+    }
   ]
 })

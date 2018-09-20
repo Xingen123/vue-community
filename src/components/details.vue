@@ -49,7 +49,7 @@
                     </div>
                   </li>
 
-                  <li class="Liapp">
+                  <li class="Liapp" @click="app">
                     {{goapp}}
                   </li>
 
@@ -81,9 +81,7 @@ export default {
           url:"http://101.200.156.70:9090/share/queryShareWbDetail",
           pageNum:1,
           pageLimit:5,
-          id: this.detailsId()
-          // "C3F25E30-4070-4C71-A646-EB342FA916D4"
-          // this.$route.params.id
+          id:this.dataidId()
         },
         list:[],
         listSwiper:[],
@@ -92,25 +90,27 @@ export default {
         goapp:"查看更多评论...",
         topStatus:"",
         allLoaded:false,
-
       }
     },
     watch:{
     },
     methods:{
+      app(){
+        window.location = "http://a.app.qq.com/o/simple.jsp?pkgname=com.aqlk.uclick"
+      },
+      dataidId(){
+        let meta = sessionStorage.getItem('meta')
+        if(meta){
+          return meta;
+        }else{
+          let id = window.location.href.match(/wbId=(\S*)/)[1]
+          return id;
+        }
+      },
       linkfather(data){
         this.dataid.id = data
         this.getParams()
         window.scrollTo(0, 0);
-      },
-      detailsId(){
-        let id = this.GetQueryString("wbId")
-        if (id) {
-          return id;
-        }else{
-          var meta =sessionStorage.getItem('meta');
-          return  meta;
-        }
       },
       //下拉
       loadTop() {
@@ -125,16 +125,11 @@ export default {
           // 取到路由带过来的参数 
           let _this = this
           // 调用示例
+         
           let param = new FormData();
-
-          
-
           param.append("id",this.dataid.id)
           param.append("pageNum",this.dataid.pageNum)
           param.append("pageLimit",this.dataid.pageLimit)
-
-          
-
           let p1 = this.AjaxPromise({  // 启动第一个任务
               url: _this.dataid.url, // 要获取的文件地址
               data: param
@@ -142,7 +137,7 @@ export default {
 
           p1.then(function(response){  // 处理第一个异步任务的结果(每次调用then都会返回一个新创建的Promise对象)
             let aJOSN =JSON.parse(response.currentTarget.response);
-              console.log(aJOSN);
+              console.log(aJOSN,1);
               _this.list = aJOSN
               _this.listSwiper = aJOSN.images
               
@@ -160,7 +155,6 @@ export default {
     },
     mounted () {
      this.getParams()
-     // this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top;
      let mySwiper = new Swiper ('.swiper-container', {
       // 如果需要分页器
          pagination: '.swiper-pagination',

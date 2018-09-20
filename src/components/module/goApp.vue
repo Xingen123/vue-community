@@ -1,6 +1,6 @@
 <template>
   <div class="goapp">
-      <div> 
+      <div @click="app"> 
         在app中打开
       </div>
   </div>
@@ -16,7 +16,9 @@ export default {
     watch:{
     },
     methods:{
-      
+      app(){
+        window.location = "http://a.app.qq.com/o/simple.jsp?pkgname=com.aqlk.uclick"
+      }
 
     },
     computed:{

@@ -65,8 +65,8 @@ export default {
         list:[],
         dataid:{
             url:"http://101.200.156.70:9090/share/queryShareUserDate",
-            userid:this.GetQueryString('userId'),
-            id:this.GetQueryString('id'),
+            userid:window.location.href.match(/userId=(\S*)/)[1],
+            id:window.location.href.match(/id=(\S*)&/)[1],
             separate:"images",
             separatetwo:"recommends"
         },
@@ -85,7 +85,6 @@ export default {
     watch:{
     },
     methods:{
-
       childlist(data){
         this.list = data
       },
@@ -107,9 +106,6 @@ export default {
 
     },
     mounted () {
-    var a = 
-    console.log(a)
-        // let Topid = Topuser.split('=')[1]; 
     },
       destroyed () {}     
 }

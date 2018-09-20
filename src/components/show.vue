@@ -58,8 +58,8 @@ export default {
         list:[],
         dataid:{
             url:"http://101.200.156.70:9090/share/queryShareLabelDate",
-            userid:this.GetQueryString('userId'),//"5E5494974FEE4B3AA1D017AF6E2B2133",
-            id:this.GetQueryString('id'),
+            userid:window.location.href.match(/userId=(\S*)/)[1],
+            id:window.location.href.match(/id=(\S*)&/)[1],
             separate:"created",
             separatetwo:"hot"
         },
